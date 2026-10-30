@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>看不懂 AI 的四級提示詞</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+/* Layout: one narrow column for a phone. Four levels, from text to video; each is one copyable prompt. */
+:root {
+  --page: #F4F1EA; --panel: #FFFFFF; --ink: #1A1A1A; --muted: #5A5650; --line: #D6D0C4;
+  --accent: #C8102E; --accent-ink: #FFFFFF; --code: #F7F4EE;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --page: #1C1B19; --panel: #262420; --ink: #ECE8E0; --muted: #ABA597; --line: #3D3A34;
+  --accent: #F0566B; --accent-ink: #1C1B19; --code: #2E2B27; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --page: #1C1B19; --panel: #262420; --ink: #ECE8E0; --muted: #ABA597; --line: #3D3A34;
+  --accent: #F0566B; --accent-ink: #1C1B19; --code: #2E2B27; color-scheme: dark }
+body { background: var(--page); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.65;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; }
+main { max-width: 640px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; }
+.kicker { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: .06em; color: var(--accent); }
+h1 { margin: 0; font-size: 32px; line-height: 1.25; font-weight: 900; text-wrap: balance; }
+.lead { margin: 0; color: var(--muted); }
+.ladder { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 0; padding: 0; list-style: none; font-size: 14px; font-weight: 700; }
+.ladder li { border: 1px solid var(--line); border-radius: 99px; padding: 2px 12px; color: var(--muted); }
+.lv { background: var(--panel); border: 1px solid var(--line); border-left: 6px solid var(--accent); border-radius: 6px;
+  padding: 16px 18px; display: grid; gap: 10px; min-width: 0; }
+.lv h2 { margin: 0; font-size: 21px; display: flex; gap: 10px; align-items: baseline; }
+.num { color: var(--accent); font-weight: 900; }
+.when { margin: 0; color: var(--muted); font-size: 15px; }
+.prompt { margin: 0; background: var(--code); border: 1px solid var(--line); border-radius: 4px; padding: 12px 14px;
+  font-size: 16px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.copy { justify-self: start; font: inherit; font-size: 15px; font-weight: 700; color: var(--accent-ink); background: var(--accent);
+  border: 0; border-radius: 6px; padding: 6px 16px; cursor: pointer; }
+.copy:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.ex { margin: 0; font-size: 15px; color: var(--muted); }
+.ex a { color: inherit; overflow-wrap: anywhere; }
+footer { display: grid; gap: 6px; color: var(--muted); font-size: 15px; }
+footer strong { color: var(--ink); }
+</style>
+
+</head>
+<body>
+<main>
+  <header>
+    <p class="kicker">給新進工程師 · 10/31 分享的帶走頁</p>
+    <h1>看不懂 AI 在說什麼？換一種方式請它說</h1>
+    <p class="lead">四個等級來自 Andrej Karpathy（OpenAI 創始成員）的建議：文字 → 圖 → 網頁 → 影片，每往下一級都「更好懂」。從第 1 級開始，看懂了就停。複製後貼到原本的對話裡；或開新對話，把看不懂的內容貼在提示詞後面。</p>
+    <ul class="ladder" aria-label="四個等級"><li>1 文字</li><li>2 圖</li><li>3 網頁</li><li>4 解說影片</li></ul>
+  </header>
+
+  <section class="lv" aria-labelledby="l1">
+    <h2 id="l1"><span class="num">1</span>文字：換句話說</h2>
+    <p class="when">最快。AI 的回答很長、術語很多時先用。Karpathy 的做法：請它用 ASD-STE100（航太維修手冊的簡化英文規範）的寫法，做到 80% 就好。</p>
+    <p class="prompt" id="p1">我看不懂。要說明的對象：你上一則回答。如果我在這段後面貼了內容，就改說明我貼的內容。
+請照 ASD-STE100 的方式重講，做到 80% 就好：
+- 先用一句話講重點。
+- 短句，一句只說一件事。
+- 主動語態，說清楚是誰做了什麼。
+- 一個詞只代表一個意思。必要的術語保留，第一次出現時用一句白話解釋。
+- 如果有要我決定或要我做的事，最後一句寫出來。</p>
+    <button class="copy" type="button" data-for="p1">複製</button>
+    <p class="ex">分享中的例子：一段原文，變成「選字中，粗體的樣子先不動。選完，樣子才更新。」</p>
+  </section>
+
+  <section class="lv" aria-labelledby="l2">
+    <h2 id="l2"><span class="num">2</span>圖</h2>
+    <p class="when">文字還是不好懂時用。Karpathy：圖比文字更容易看懂。</p>
+    <p class="prompt" id="p2">請畫一張圖說明。要說明的對象：你上一則回答。如果我在這段後面貼了內容，就改說明我貼的內容。
+- 先選最合適的圖：步驟先後用流程圖，誰呼叫誰或誰包含誰用結構圖，狀態怎麼改變用狀態圖，改之前和改之後用對照圖。告訴我你選哪一種、為什麼。
+- 每個方塊只寫幾個字。
+- 用紅色標出最重要、最容易誤會的一處。
+- 用 Mermaid 或 SVG 畫。圖下面用一句話說怎麼看這張圖。</p>
+    <button class="copy" type="button" data-for="p2">複製</button>
+    <p class="ex">分享中的例子：打字 → 選字中 → 選完，三格，選字中標著「測試鎖住這裡」。</p>
+  </section>
+
+  <section class="lv" aria-labelledby="l3">
+    <h2 id="l3"><span class="num">3</span>網頁</h2>
+    <p class="when">要自己動手按一次才有感覺時用。Karpathy：要求「用 HTML 輸出」，就會得到可以互動的網頁。</p>
+    <p class="prompt" id="p3">請用 HTML 輸出一個互動網頁，讓我自己操作來看懂。要說明的對象：你上一則回答。如果我在這段後面貼了內容，就改說明我貼的內容。
+- 讓我改一個輸入，或按「上一步／下一步」，馬上看到結果怎麼變。
+- 每一步顯示：發生了什麼、為什麼。
+- 用紅色標出最重要的一處。
+- 頁面上寫「這是示意」，並列出你簡化了哪些地方。
+- 單一檔案，不用連網，瀏覽器打開就能用。</p>
+    <button class="copy" type="button" data-for="p3">複製</button>
+    <p class="ex">分享中的例子：按「下一步」看選字中、選完，畫面的樣子什麼時候更新。</p>
+  </section>
+
+  <section class="lv" aria-labelledby="l4">
+    <h2 id="l4"><span class="num">4</span>解說影片</h2>
+    <p class="when">要給別人看、或要記住整個過程時用。Karpathy 最看好的一種：為任何主題量身做的解說影片。</p>
+    <p class="prompt" id="p4">請做一支 3Blue1Brown 風格的解說短片。要說明的對象：你上一則回答。如果我在這段後面貼了內容，就改說明我貼的內容。
+- 先給我分鏡：每個畫面演什麼、字幕寫什麼。我確認後再做。
+- 60 秒內，一個畫面一個重點，畫面下方有字幕。
+- 旁白用免費、能在我電腦上跑的語音工具；不確定的話，先列出選項給我挑。
+- 輸出 mp4，1920×1080。如果你不能直接產出影片，給我完整的程式和指令，讓我在自己電腦上做出來。
+- 最後告訴我你用了什麼工具，下次照做。</p>
+    <button class="copy" type="button" data-for="p4">複製</button>
+    <p class="ex">分享中的例子：12 秒的短片，一步一步播完「選字中先不動，選完才更新」。</p>
+  </section>
+
+  <p class="ex">出處：Andrej Karpathy，X 貼文，2026-10-02，<a href="https://x.com/karpathy/status/2105819303471976479">x.com/karpathy/status/2105819303471976479</a>。提示詞是 Bruce 依他的四級改寫，不是原文。</p>
+
+  <footer>
+    <p><strong>看懂了，再請 AI 用一句話重述你的要求。你確認了，才開工。</strong></p>
+    <p>就像 Lauren 說的：先親手做過一次，你才知道「好」是什麼樣子。</p>
+    <p>Bruce · 2026-10-31</p>
+  </footer>
+</main>
+
+<script>
+document.querySelectorAll('.copy').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.for);
+    const done = () => { btn.textContent = '已複製'; setTimeout(() => { btn.textContent = '複製'; }, 1500); };
+    const select = () => { const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = '已選取，請按複製'; };
+    try {
+      navigator.clipboard.writeText(el.textContent).then(done, select);
+    } catch (e) { select(); }
+  });
+});
+</script>
+
+</body>
+</html>
